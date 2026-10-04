@@ -3,13 +3,13 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, maximum-scale=1">
-<title>RAB Qory</title>
+<title>Catatan Keuangan</title>
 <meta name="color-scheme" content="light only">
 <meta name="theme-color" content="#F4F6F5">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
-<meta name="apple-mobile-web-app-title" content="RAB Qory">
+<meta name="apple-mobile-web-app-title" content="Keuangan">
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="apple-touch-icon" href="icon-180.png">
 <link rel="icon" href="icon.svg" type="image/svg+xml">
@@ -373,15 +373,15 @@ svg.i{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.8;stro
     <div class="onb">
       <div class="hero">
         <div class="logo"><svg class="i" viewBox="0 0 24 24"><path d="M20 7H5a2 2 0 0 1 0-4h13v4M3 5v14a2 2 0 0 0 2 2h15V7M16 14h.01"/></svg></div>
-        <h1>RAB Qory</h1>
+        <h1>Catatan Keuangan</h1>
         <p>Catat pengeluaran, pantau sisa uang, dan kejar target tabungan. Semuanya langsung tersimpan di spreadsheet-mu.</p>
       </div>
       <div class="card" style="padding:4px 16px;margin-bottom:14px">
-        <div class="stepl"><i>1</i><span>Buka spreadsheet <b>RANCANGAN ANGGARAN QORY</b> di laptop.</span></div>
+        <div class="stepl"><i>1</i><span>Buka spreadsheet anggaranmu di laptop.</span></div>
         <div class="stepl"><i>2</i><span>Klik menu <b>💰 Anggaran → Hubungkan aplikasi HP</b>.</span></div>
-        <div class="stepl"><i>3</i><span>Scan QR-nya dengan kamera HP, atau salin kuncinya ke kolom di bawah.</span></div>
+        <div class="stepl"><i>3</i><span>Scan QR-nya dengan kamera HP, atau salin kode aksesnya ke kolom di bawah.</span></div>
       </div>
-      <input class="field" id="onbKey" placeholder="Tempel kunci akses" autocomplete="off" autocapitalize="off" spellcheck="false" style="background:#fff;padding:15px 14px">
+      <input class="field" id="onbKey" placeholder="Tempel kode akses" autocomplete="off" autocapitalize="off" spellcheck="false" style="background:#fff;padding:15px 14px">
       <button class="btn" id="onbGo">Hubungkan</button>
     </div>
   </section>
@@ -550,6 +550,7 @@ svg.i{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.8;stro
   <div class="grab"></div>
   <div class="shd"><button class="xbtn" data-close><svg class="i" viewBox="0 0 24 24"><path d="M18 6 6 18M6 6l12 12"/></svg></button><h4>Pengaturan</h4><span style="width:38px"></span></div>
   <div class="card" style="padding:2px 16px;margin-top:8px">
+    <div class="switch"><span>Nama panggilan</span><span style="display:flex;gap:6px;align-items:center"><input class="field" id="namaIn" placeholder="mis. Lala" style="width:120px;padding:8px 10px;font-size:13px"><button class="xbtn" id="namaSave" aria-label="Simpan nama" style="width:34px;height:34px"><svg class="i" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg></button></span></div>
     <div class="switch"><span>Sembunyikan saldo saat dibuka</span><button class="tog" id="togHide"></button></div>
     <a class="lnk" data-sheet="cycle" href="#" onclick="return false"><span class="ic" style="background:#FFF4DB;color:#B45309"><svg class="i" viewBox="0 0 24 24"><path d="M3 6a1 1 0 0 1 1-1h16a1 1 0 0 1 1 1v14a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1zM3 10h18M8 3v4M16 3v4"/></svg></span><span>Siklus gajian<small id="setCycle" style="display:block;font-size:11.5px;color:var(--muted);font-weight:500">—</small></span><svg class="i chev" viewBox="0 0 24 24"><path d="m9 18 6-6-6-6"/></svg></a>
     <a class="lnk" data-sheet="saldo" href="#" onclick="return false"><span class="ic" style="background:#E8F6EE;color:#0E8A3D"><svg class="i" viewBox="0 0 24 24"><path d="M20 7H5a2 2 0 0 1 0-4h13v4M3 5v14a2 2 0 0 0 2 2h15V7M16 14h.01"/></svg></span>Saldo awal rekening<svg class="i chev" viewBox="0 0 24 24"><path d="m9 18 6-6-6-6"/></svg></a>
@@ -602,6 +603,8 @@ const LS = { get(k, d) { try { const v = localStorage.getItem(k); return v === n
              set(k, v) { try { localStorage.setItem(k, JSON.stringify(v)); } catch (e) {} },
              del(k) { try { localStorage.removeItem(k); } catch (e) {} } };
 let TOKEN = LS.get('rab_k', '');
+let APIID = LS.get('rab_u', '');
+const apiUrl = () => APIID ? 'https://script.google.com/macros/s/' + APIID + '/exec' : API_URL;
 let D = LS.get('rab_cache', null);
 let HIDE = LS.get('rab_hide', false);
 let histF = 'all', histDay = null;
@@ -649,6 +652,7 @@ const P = {
   trash: 'M3 6h18M8 6V4h8v2M19 6l-1 14H6L5 6',
   repeat: 'M17 2l4 4-4 4M3 11V9a3 3 0 0 1 3-3h15M7 22l-4-4 4-4M21 13v2a3 3 0 0 1-3 3H3',
   check: 'M20 6 9 17l-5-5',
+  wallet: 'M20 7H5a2 2 0 0 1 0-4h13v4M3 5v14a2 2 0 0 0 2 2h15V7M16 14h.01',
   inc: 'M17 7 7 17M16 17H7V8',
   chart: 'M4 20V10M10 20V4M16 20v-7M22 20H2',
   receipt: 'M5 3h14v18l-3-2-2 2-2-2-2 2-2-2-3 2zM9 8h6M9 12h6M9 16h3',
@@ -697,7 +701,7 @@ const txKey = t => (t.kind === 'inc' ? 'i' : '') + t.row;
 /* ---------- API ---------- */
 async function api(fn, args) {
   if (!TOKEN) throw new Error('Belum terhubung');
-  const r = await fetch(API_URL, { method: 'POST', body: JSON.stringify({ t: TOKEN, fn, args: args || {} }) });
+  const r = await fetch(apiUrl(), { method: 'POST', body: JSON.stringify({ t: TOKEN, fn, args: args || {} }) });
   const j = await r.json();
   if (!j.ok) { if (j.error === 'UNAUTHORIZED') { toast('Kunci akses tidak valid'); logout(); } throw new Error(j.error); }
   return j.data;
@@ -754,6 +758,7 @@ function openSheetFor(k) {
   }
   if (k === 'settings') {
     $('#togHide').classList.toggle('on', LS.get('rab_hide', false));
+    $('#namaIn').value = (D && D.nama) || '';
     $('#lnkSheet').href = (D && D.sheetUrl) || '#';
     $('#lnkBot').href = D && D.bot ? 'https://t.me/' + D.bot : '#';
     $('#setStatus').textContent = D ? 'Terhubung ✓' : '—';
@@ -769,8 +774,9 @@ function render() {
   if (!D) return;
   const h = new Date().getHours();
   $('#greet').textContent = h < 11 ? 'Selamat pagi' : h < 15 ? 'Selamat siang' : h < 18 ? 'Selamat sore' : 'Selamat malam';
-  $('#hello').textContent = 'Halo, ' + (D.nama || 'Qory');
-  $('#ava').textContent = (D.nama || 'Q').slice(0, 1).toUpperCase();
+  $('#hello').textContent = D.nama ? 'Halo, ' + D.nama : 'Halo 👋';
+  $('#ava').textContent = (D.nama || '').slice(0, 1).toUpperCase();
+  if (!D.nama) $('#ava').innerHTML = svg('wallet');
   renderWeek();
   $('#hSisa').textContent = rp(D.sisa);
   $('#hHarian').textContent = rpS(D.harian) + '/hari · ' + D.hari + ' hari lagi gajian';
@@ -1033,9 +1039,11 @@ function openIncome(row) {
 $('#saldoIn').addEventListener('input', e => fmtIn(e.target));
 $('#saldoSave').onclick = async () => { const n = num($('#saldoIn').value); closeSheets(); toast('Menyimpan…');
   try { setData(await api('saldo', { amount: n })); toast('Saldo awal ' + rp(n) + ' tersimpan', true); } catch (e) {} };
+$('#namaSave').onclick = async () => { const n = $('#namaIn').value.trim().slice(0, 30); closeSheets(); toast('Menyimpan…');
+  try { setData(await api('nama', { nama: n })); toast('Nama tersimpan', true); } catch (e) {} };
 $('#togHide').onclick = () => { const v = !LS.get('rab_hide', false); LS.set('rab_hide', v); $('#togHide').classList.toggle('on', v); };
 $('#logout').onclick = () => { if (confirm('Putuskan aplikasi di perangkat ini? Data di spreadsheet tidak terhapus.')) logout(); };
-function logout() { TOKEN = ''; D = null; LS.del('rab_k'); LS.del('rab_cache'); closeSheets(); boot(); }
+function logout() { TOKEN = ''; APIID = ''; D = null; LS.del('rab_k'); LS.del('rab_u'); LS.del('rab_cache'); closeSheets(); boot(); }
 
 /* ---------- PAYSLIP MANUAL ---------- */
 let PS = { bulan: 1, vals: {} };
@@ -1102,11 +1110,21 @@ $('#cySave').onclick = async () => { closeSheets(); toast('Menyimpan siklus…')
   try { setData(await api('cycle', CY)); toast('Siklus gajian tiap tanggal ' + CY.day + ' tersimpan', true); } catch (e) {} };
 
 /* ---------- BOOT ---------- */
-function connect(k) { TOKEN = k.trim(); LS.set('rab_k', TOKEN); boot(); load(); }
-$('#onbGo').onclick = () => { const k = $('#onbKey').value.trim(); if (k.length < 20) return toast('Kunci belum benar'); connect(k); };
+function connect(k) {
+  k = k.trim(); const m = k.match(/^([A-Za-z0-9_-]{30,})\.([A-Za-z0-9]+)$/);
+  if (m) { APIID = m[1]; TOKEN = m[2]; } else { TOKEN = k; APIID = ''; }
+  LS.set('rab_k', TOKEN); if (APIID) LS.set('rab_u', APIID); else LS.del('rab_u');
+  D = null; LS.del('rab_cache'); boot(); load();
+}
+$('#onbGo').onclick = () => { const k = $('#onbKey').value.trim(); if (k.length < 20) return toast('Kode akses belum benar'); connect(k); };
 function boot() {
-  const m = location.hash.match(/k=([A-Za-z0-9]+)/);
-  if (m) { TOKEN = m[1]; LS.set('rab_k', TOKEN); history.replaceState(null, '', location.pathname); }
+  const m = location.hash.match(/k=([A-Za-z0-9]+)/), u = location.hash.match(/u=([A-Za-z0-9_-]+)/);
+  if (m) {
+    if (TOKEN !== m[1] || APIID !== (u ? u[1] : '')) { D = null; LS.del('rab_cache'); }
+    TOKEN = m[1]; LS.set('rab_k', TOKEN);
+    APIID = u ? u[1] : ''; if (APIID) LS.set('rab_u', APIID); else LS.del('rab_u');
+    history.replaceState(null, '', location.pathname);
+  }
   const ok = !!TOKEN;
   $('#tabbar').style.display = ok ? '' : 'none';
   if (!ok) { $$('.view').forEach(x => x.classList.toggle('on', x.id === 'v-onb')); return; }

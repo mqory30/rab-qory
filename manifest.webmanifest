@@ -1,6 +1,6 @@
 {
-  "name": "RAB Qory",
-  "short_name": "RAB Qory",
+  "name": "Catatan Keuangan",
+  "short_name": "Keuangan",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",
