@@ -131,7 +131,7 @@ svg.i{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.8;stro
 .txi .m b{display:block;font-weight:600;font-size:14px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .txi .m span{font-size:11.5px;color:var(--muted)}
 .txi .a{font-weight:700;font-size:14px;white-space:nowrap}
-.a.plus{color:var(--g)}
+.a.plus{color:var(--g)}.a.save{color:#2563EB}
 .dhead{font-size:12px;font-weight:600;color:var(--muted);margin:18px 4px 8px;display:flex;justify-content:space-between}
 .dhead:first-child{margin-top:4px}
 
@@ -166,13 +166,13 @@ svg.i{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.8;stro
 .tabbar>.fab.open{transform:rotate(45deg)}
 .fabmenu{position:fixed;inset:0;z-index:19;background:rgba(16,26,21,.3);-webkit-backdrop-filter:blur(3px);backdrop-filter:blur(3px);opacity:0;pointer-events:none;transition:opacity .2s}
 .fabmenu.open{opacity:1;pointer-events:auto}
-.fabopts{position:fixed;left:50%;bottom:calc(98px + env(safe-area-inset-bottom));transform:translateX(-50%);display:flex;gap:12px;z-index:21;pointer-events:none}
-.fabopts button{width:132px;display:flex;flex-direction:column;align-items:flex-start;gap:10px;border:0;border-radius:20px;padding:14px;background:var(--card);box-shadow:var(--sh2);font-weight:700;font-size:13.5px;text-align:left;opacity:0;transform:translateY(18px) scale(.92);transition:all .24s cubic-bezier(.2,.9,.3,1.2)}
+.fabopts{position:fixed;left:50%;bottom:calc(98px + env(safe-area-inset-bottom));transform:translateX(-50%);display:flex;gap:10px;z-index:21;pointer-events:none}
+.fabopts button{width:112px;display:flex;flex-direction:column;align-items:flex-start;gap:10px;border:0;border-radius:20px;padding:14px;background:var(--card);box-shadow:var(--sh2);font-weight:700;font-size:13.5px;text-align:left;opacity:0;transform:translateY(18px) scale(.92);transition:all .24s cubic-bezier(.2,.9,.3,1.2)}
 .fabopts button small{display:block;font-size:11px;font-weight:500;color:var(--muted);margin-top:1px}
 .fabopts button .ic{width:38px;height:38px;border-radius:12px}
 .fabmenu.open~.fabopts{pointer-events:auto}
 .fabmenu.open~.fabopts button{opacity:1;transform:none}
-.fabmenu.open~.fabopts button:nth-child(2){transition-delay:.05s}
+.fabmenu.open~.fabopts button:nth-child(2){transition-delay:.04s}.fabmenu.open~.fabopts button:nth-child(3){transition-delay:.08s}
 
 /* ---------- sheets ---------- */
 .sheet-bg{position:fixed;inset:0;background:rgba(16,26,21,.32);z-index:40;opacity:0;pointer-events:none;transition:opacity .22s}
@@ -407,10 +407,10 @@ svg.i{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.8;stro
       </div>
       <div class="note" id="note"></div>
       <div class="qa">
-        <button data-add="out"><span><svg class="i" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg></span>Catat</button>
-        <button data-add="in"><span><svg class="i" viewBox="0 0 24 24"><path d="M19 7c-1.4 0-2.6 1-3 1.6C12.6 7 5 8 5 13c0 1.7.5 2.8 2 4v3h3.5v-1.6h3V20H17v-3.2c.9-.6 1.6-1.3 1.9-2.3H21v-4h-2c-.2-.8-.6-1.5-1-2zM2 9v1a2 2 0 0 0 2 2h1M15.5 11h.01"/></svg></span>Setor</button>
-        <button data-sheet="saldo"><span><svg class="i" viewBox="0 0 24 24"><path d="M20 7H5a2 2 0 0 1 0-4h13v4M3 5v14a2 2 0 0 0 2 2h15V7M16 14h.01"/></svg></span>Saldo awal</button>
-        <button data-sheet="payslip"><span><svg class="i" viewBox="0 0 24 24"><path d="M14 3H6a1 1 0 0 0-1 1v16a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V8zM14 3v5h5M9 13h6M9 17h4"/></svg></span>Payslip</button>
+        <button data-add="inc"><span><svg class="i" viewBox="0 0 24 24"><path d="M17 7 7 17M16 17H7V8"/></svg></span>Pemasukan</button>
+        <button data-add="out"><span style="color:var(--red)"><svg class="i" viewBox="0 0 24 24"><path d="M7 17 17 7M8 7h9v9"/></svg></span>Pengeluaran</button>
+        <button data-add="in"><span><svg class="i" viewBox="0 0 24 24"><path d="M19 7c-1.4 0-2.6 1-3 1.6C12.6 7 5 8 5 13c0 1.7.5 2.8 2 4v3h3.5v-1.6h3V20H17v-3.2c.9-.6 1.6-1.3 1.9-2.3H21v-4h-2c-.2-.8-.6-1.5-1-2zM2 9v1a2 2 0 0 0 2 2h1M15.5 11h.01"/></svg></span>Alokasi</button>
+        <button data-sheet="payslip"><span style="color:#6D28D9"><svg class="i" viewBox="0 0 24 24"><path d="M14 3H6a1 1 0 0 0-1 1v16a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V8zM14 3v5h5M9 13h6M9 17h4"/></svg></span>Payslip</button>
       </div>
       <div class="sec"><h3>Budget siklus ini</h3><button data-go="insight">Lihat semua</button></div>
       <div id="hTiles"></div>
@@ -425,7 +425,7 @@ svg.i{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.8;stro
   <!-- HISTORY -->
   <section class="view" id="v-hist">
     <div class="ptitle"><h1>Riwayat</h1></div>
-    <div class="seg full" id="histSeg" style="margin-bottom:6px"><button class="on" data-f="all">Semua</button><button data-f="out">Pengeluaran</button><button data-f="in">Tabungan</button></div>
+    <div class="seg full" id="histSeg" style="margin-bottom:6px"><button class="on" data-f="all">Semua</button><button data-f="out">Keluar</button><button data-f="inc">Masuk</button><button data-f="in">Alokasi</button></div>
     <div id="histDay" style="margin-top:10px"></div>
     <div id="histList"></div>
     <p class="empty" style="padding-top:14px">Riwayat lengkap ada di sheet Spending.</p>
@@ -455,11 +455,11 @@ svg.i{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.8;stro
       <div class="card" style="padding:20px 16px 16px">
         <div class="bigring" id="sRing"></div>
         <div class="stats in" id="sTrio"></div>
-        <button class="btn" data-add="in"><svg class="i" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg>Setor tabungan</button>
+        <button class="btn" data-add="in"><svg class="i" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg>Alokasi ke tabungan</button>
       </div>
       <div class="sec"><h3>Pos tabungan</h3></div>
       <div class="txl" id="sPos"></div>
-      <div class="sec"><h3>Riwayat setoran</h3></div>
+      <div class="sec"><h3>Riwayat alokasi</h3></div>
       <div id="sHist"></div>
     </div><div>
       <div class="sec"><h3>Proyeksi</h3><button id="saveProj">Simpan</button></div>
@@ -482,8 +482,9 @@ svg.i{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.8;stro
 <!-- TAB BAR -->
 <div class="fabmenu" id="fabBg"></div>
 <div class="fabopts" id="fabOpts">
-  <button data-add="in"><span class="ic" style="background:#E8F6EE;color:#0E8A3D"><svg class="i" viewBox="0 0 24 24"><path d="M19 7c-1.4 0-2.6 1-3 1.6C12.6 7 5 8 5 13c0 1.7.5 2.8 2 4v3h3.5v-1.6h3V20H17v-3.2c.9-.6 1.6-1.3 1.9-2.3H21v-4h-2c-.2-.8-.6-1.5-1-2zM2 9v1a2 2 0 0 0 2 2h1M15.5 11h.01"/></svg></span><span>Setor<small>ke tabungan</small></span></button>
-  <button data-add="out"><span class="ic" style="background:#FDEEEE;color:#E5484D"><svg class="i" viewBox="0 0 24 24"><path d="M7 17 17 7M8 7h9v9"/></svg></span><span>Pengeluaran<small>catat belanja</small></span></button>
+  <button data-add="inc"><span class="ic" style="background:#E8F6EE;color:#0E8A3D"><svg class="i" viewBox="0 0 24 24"><path d="M17 7 7 17M16 17H7V8"/></svg></span><span>Pemasukan<small>uang masuk</small></span></button>
+  <button data-add="out"><span class="ic" style="background:#FDEEEE;color:#E5484D"><svg class="i" viewBox="0 0 24 24"><path d="M7 17 17 7M8 7h9v9"/></svg></span><span>Pengeluaran<small>uang keluar</small></span></button>
+  <button data-add="in"><span class="ic" style="background:#E3EEFF;color:#2563EB"><svg class="i" viewBox="0 0 24 24"><path d="M19 7c-1.4 0-2.6 1-3 1.6C12.6 7 5 8 5 13c0 1.7.5 2.8 2 4v3h3.5v-1.6h3V20H17v-3.2c.9-.6 1.6-1.3 1.9-2.3H21v-4h-2c-.2-.8-.6-1.5-1-2zM2 9v1a2 2 0 0 0 2 2h1M15.5 11h.01"/></svg></span><span>Alokasi<small>ke tabungan</small></span></button>
 </div>
 <nav class="tabbar" id="tabbar" style="display:none">
   <button data-go="home" class="on"><svg class="i" viewBox="0 0 24 24"><path d="M3 10.5 12 3l9 7.5V20a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"/></svg>Beranda</button>
@@ -501,8 +502,9 @@ svg.i{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.8;stro
   <div class="shd">
     <button class="xbtn" data-close><svg class="i" viewBox="0 0 24 24"><path d="M18 6 6 18M6 6l12 12"/></svg></button>
     <div class="seg" id="addSeg">
-      <button data-m="out" class="out on">Pengeluaran</button>
-      <button data-m="in" class="in">Tabungan</button>
+      <button data-m="out" class="on">Keluar</button>
+      <button data-m="inc">Masuk</button>
+      <button data-m="in">Alokasi</button>
     </div>
     <span style="width:38px"></span>
   </div>
@@ -550,6 +552,7 @@ svg.i{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.8;stro
   <div class="card" style="padding:2px 16px;margin-top:8px">
     <div class="switch"><span>Sembunyikan saldo saat dibuka</span><button class="tog" id="togHide"></button></div>
     <a class="lnk" data-sheet="cycle" href="#" onclick="return false"><span class="ic" style="background:#FFF4DB;color:#B45309"><svg class="i" viewBox="0 0 24 24"><path d="M3 6a1 1 0 0 1 1-1h16a1 1 0 0 1 1 1v14a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1zM3 10h18M8 3v4M16 3v4"/></svg></span><span>Siklus gajian<small id="setCycle" style="display:block;font-size:11.5px;color:var(--muted);font-weight:500">—</small></span><svg class="i chev" viewBox="0 0 24 24"><path d="m9 18 6-6-6-6"/></svg></a>
+    <a class="lnk" data-sheet="saldo" href="#" onclick="return false"><span class="ic" style="background:#E8F6EE;color:#0E8A3D"><svg class="i" viewBox="0 0 24 24"><path d="M20 7H5a2 2 0 0 1 0-4h13v4M3 5v14a2 2 0 0 0 2 2h15V7M16 14h.01"/></svg></span>Saldo awal rekening<svg class="i chev" viewBox="0 0 24 24"><path d="m9 18 6-6-6-6"/></svg></a>
     <a class="lnk" data-sheet="payslip" href="#" onclick="return false"><span class="ic" style="background:#EEE8FF;color:#6D28D9"><svg class="i" viewBox="0 0 24 24"><path d="M14 3H6a1 1 0 0 0-1 1v16a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V8zM14 3v5h5M9 13h6M9 17h4"/></svg></span>Input payslip<svg class="i chev" viewBox="0 0 24 24"><path d="m9 18 6-6-6-6"/></svg></a>
     <a class="lnk" id="lnkSheet" target="_blank" rel="noopener"><span class="ic" style="background:#E8F6EE;color:#0E8A3D"><svg class="i" viewBox="0 0 24 24"><path d="M3 3h18v18H3zM3 9h18M3 15h18M9 3v18"/></svg></span>Buka spreadsheet<svg class="i chev" viewBox="0 0 24 24"><path d="m9 18 6-6-6-6"/></svg></a>
     <a class="lnk" id="lnkBot" target="_blank" rel="noopener"><span class="ic" style="background:#E3EEFF;color:#2563EB"><svg class="i" viewBox="0 0 24 24"><path d="M22 2 11 13M22 2l-7 20-4-9-9-4z"/></svg></span>Bot Telegram<svg class="i chev" viewBox="0 0 24 24"><path d="m9 18 6-6-6-6"/></svg></a>
@@ -646,6 +649,7 @@ const P = {
   trash: 'M3 6h18M8 6V4h8v2M19 6l-1 14H6L5 6',
   repeat: 'M17 2l4 4-4 4M3 11V9a3 3 0 0 1 3-3h15M7 22l-4-4 4-4M21 13v2a3 3 0 0 1-3 3H3',
   check: 'M20 6 9 17l-5-5',
+  inc: 'M17 7 7 17M16 17H7V8',
   chart: 'M4 20V10M10 20V4M16 20v-7M22 20H2',
   receipt: 'M5 3h14v18l-3-2-2 2-2-2-2 2-2-2-3 2zM9 8h6M9 12h6M9 16h3',
   clock: 'M12 22c5.5 0 10-4.5 10-10S17.5 2 12 2 2 6.5 2 12s4.5 10 10 10zM12 6v6l4 2',
@@ -683,6 +687,12 @@ function toast(t, ok) { const el = $('#toast'); el.innerHTML = (ok ? svg('check'
 const emptyC = (icon, title, sub, attrs) => `<button class="emptyc" ${attrs || ''}><span class="ic">${svg(icon)}</span><span><b>${title}</b><span>${sub}</span></span></button>`;
 function haptic() { try { navigator.vibrate && navigator.vibrate(8); } catch (e) {} }
 const isSave = c => D && D.tabKat && D.tabKat.indexOf(c) >= 0;
+const incBox = size => `<span class="ic" style="background:#DCFCE7;color:#15803D;${size ? 'width:' + size + 'px;height:' + size + 'px' : ''}">${svg('inc')}</span>`;
+function allTx() {
+  const inc = (D.income || []).map(t => Object.assign({ kind: 'inc', cat: '' }, t));
+  return (D.recent || []).concat(inc).sort((a, b) => a.date < b.date ? 1 : a.date > b.date ? -1 : 0);
+}
+const txKey = t => (t.kind === 'inc' ? 'i' : '') + t.row;
 
 /* ---------- API ---------- */
 async function api(fn, args) {
@@ -725,7 +735,7 @@ document.addEventListener('click', e => {
   const s = e.target.closest('[data-sheet]'); if (s) { openSheetFor(s.dataset.sheet); return; }
   if (e.target.closest('[data-close]')) { closeSheets(); return; }
   const bk = e.target.closest('[data-back]'); if (bk) { openSheet(bk.dataset.back); return; }
-  const t = e.target.closest('[data-tx]'); if (t) { openTx(Number(t.dataset.tx)); return; }
+  const t = e.target.closest('[data-tx]'); if (t) { openTx(t.dataset.tx); return; }
   const dy = e.target.closest('[data-day]'); if (dy) { histDay = dy.dataset.day; go('hist'); histDay = dy.dataset.day; renderHist(); return; }
 });
 $('#sheetBg').onclick = closeSheets;
@@ -779,8 +789,8 @@ function render() {
   const tp = D.target ? D.totalAset / D.target : 0;
   $('#hGoal').innerHTML = ring(tp, 58, 6) + `<div class="tx"><b>Target ${rpS(D.target)}</b><span class="money">${rpS(D.totalAset)} dari ${rpS(D.target)} · kurang ${rpS(Math.max(0, D.target - D.totalAset))}</span></div><button class="add" data-add="in" aria-label="Setor">${'<svg class="i" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg>'}</button>`;
 
-  const rec = (D.recent || []).slice(0, 6);
-  $('#hTx').innerHTML = rec.length ? '<div class="txl">' + rec.map(txRow).join('') + '</div>' : emptyC('receipt', 'Belum ada transaksi', 'Ketuk + untuk mencatat pengeluaran pertama.', 'data-add="out"');
+  const rec = allTx().slice(0, 6);
+  $('#hTx').innerHTML = rec.length ? '<div class="txl">' + rec.map(txRow).join('') + '</div>' : emptyC('receipt', 'Belum ada transaksi', 'Ketuk + untuk mencatat pemasukan, pengeluaran, atau alokasi tabungan.', 'data-add="out"');
   renderInsight(); renderSave(); renderHist();
   applyHide();
 }
@@ -790,30 +800,32 @@ function ring(p, size, w) {
 }
 function renderWeek() {
   const t = pd(todayIso()), dow = (t.getDay() + 6) % 7, mon = new Date(t); mon.setDate(t.getDate() - dow);
-  const has = new Set((D.recent || []).map(x => x.date));
+  const has = new Set(allTx().map(x => x.date));
   let s = '';
   for (let i = 0; i < 7; i++) { const d = new Date(mon); d.setDate(mon.getDate() + i); const k = iso(d);
     s += `<button class="day ${k === iso(t) ? 'today' : ''} ${has.has(k) ? 'has' : ''} ${d > t ? 'future' : ''}" data-day="${k}"><small>${HARI[d.getDay()]}</small><b>${d.getDate()}</b><i></i></button>`; }
   $('#week').innerHTML = s;
 }
 function txRow(t) {
+  if (t.kind === 'inc') return `<button class="txi" data-tx="${txKey(t)}">${incBox()}<span class="m"><b>${esc(t.desc)}</b><span>Pemasukan · ${relDay(t.date)}</span></span><span class="a money plus">+${rp(t.amt)}</span></button>`;
   const s = isSave(t.cat);
-  return `<button class="txi" data-tx="${t.row}">${icBox(t.cat)}<span class="m"><b>${esc(t.desc)}</b><span>${esc(t.cat || 'Tanpa kategori')} · ${relDay(t.date)}</span></span><span class="a money ${s ? 'plus' : ''}">${s ? '+' : '−'}${rp(t.amt).replace('−', '')}</span></button>`;
+  return `<button class="txi" data-tx="${txKey(t)}">${icBox(t.cat)}<span class="m"><b>${esc(t.desc)}</b><span>${s ? 'Alokasi → ' : ''}${esc(t.cat || 'Tanpa kategori')} · ${relDay(t.date)}</span></span><span class="a money ${s ? 'save' : ''}">${s ? '' : '−'}${rp(t.amt).replace('−', '')}</span></button>`;
 }
 function relDay(s) { const t = todayIso(); if (s === t) return 'Hari ini'; if (s === addDays(t, -1)) return 'Kemarin'; return tglS(s); }
 function dayHead(s) { const t = todayIso(); if (s === t) return 'Hari ini'; if (s === addDays(t, -1)) return 'Kemarin'; const d = pd(s); return HARIL[d.getDay()] + ', ' + tglS(s); }
 
 function renderHist() {
   if (!D) return;
-  let list = (D.recent || []).slice();
-  if (histF === 'out') list = list.filter(t => !isSave(t.cat));
-  if (histF === 'in') list = list.filter(t => isSave(t.cat));
+  let list = allTx();
+  if (histF === 'out') list = list.filter(t => t.kind !== 'inc' && !isSave(t.cat));
+  if (histF === 'in') list = list.filter(t => t.kind !== 'inc' && isSave(t.cat));
+  if (histF === 'inc') list = list.filter(t => t.kind === 'inc');
   if (histDay) list = list.filter(t => t.date === histDay);
   $('#histDay').innerHTML = histDay ? `<button class="chip on" id="clrDay" style="margin-bottom:4px">${tgl(histDay)} ✕</button>` : '';
   const c = $('#clrDay'); if (c) c.onclick = () => { histDay = null; renderHist(); };
   const groups = {}; list.forEach(t => (groups[t.date] = groups[t.date] || []).push(t));
   $('#histList').innerHTML = Object.keys(groups).sort().reverse().map(k => {
-    const tot = groups[k].filter(t => !isSave(t.cat)).reduce((a, t) => a + t.amt, 0);
+    const tot = groups[k].filter(t => t.kind !== 'inc' && !isSave(t.cat)).reduce((a, t) => a + t.amt, 0);
     return `<div class="dhead"><span>${dayHead(k)}</span><span class="money">${tot ? '−' + rp(tot) : ''}</span></div><div class="txl">${groups[k].map(txRow).join('')}</div>`;
   }).join('') || '<div style="margin-top:8px">' + emptyC('receipt', 'Tidak ada transaksi', histDay ? 'Tidak ada catatan di tanggal ini.' : 'Transaksi yang kamu catat akan muncul di sini.') + '</div>';
   applyHide();
@@ -846,7 +858,7 @@ function renderSave() {
   const tp = D.target ? D.totalAset / D.target : 0;
   $('#sRing').innerHTML = ring(tp, 168, 14).replace(/<b>(\d+)%<\/b>/, '<b>$1%<small>terkumpul</small></b>') + `<h2 class="money">${rp(D.totalAset)}</h2><p>dari target ${rp(D.target)}</p>`;
   $('#sPos').innerHTML = (D.tabungan || []).map(t => `<div class="txi">${icBox(t.nama)}<span class="m"><b>${esc(t.nama)}</b><span>${esc(t.akun || '')}</span></span><span class="a money">${rp(t.saldo)}</span></div>`).join('');
-  $('#sHist').innerHTML = (D.setoran || []).length ? '<div class="txl">' + D.setoran.map(txRow).join('') + '</div>' : emptyC('piggy', 'Belum ada setoran', 'Setoran tabungan sejak mulai catat tampil di sini.', 'data-add="in"');
+  $('#sHist').innerHTML = (D.setoran || []).length ? '<div class="txl">' + D.setoran.map(txRow).join('') + '</div>' : emptyC('piggy', 'Belum ada alokasi', 'Uang yang kamu pindahkan dari sisa uang ke tabungan tampil di sini.', 'data-add="in"');
   const p = D.proy || {};
   if (!document.activeElement || !document.activeElement.closest('#v-save .inp')) {
     $('#pSetor').value = dots(p.setoran); $('#pSaldo').value = dots(p.saldo); $('#pThr').value = dots(p.thr);
@@ -893,7 +905,7 @@ $('#saveProj').onclick = async () => {
 let A = { mode: 'out', amt: '', cat: '', date: '', autoCat: true };
 const KEYS = ['1','2','3','4','5','6','7','8','9','000','0','⌫'];
 $('#keys').innerHTML = KEYS.map(k => `<button class="key" data-k="${k}">${k === '⌫' ? svg('back') : k}</button>`).join('');
-const QUICK = { out: [10000, 20000, 50000, 100000], in: [100000, 250000, 500000, 1000000] };
+const QUICK = { out: [10000, 20000, 50000, 100000], inc: [50000, 100000, 500000, 1000000], in: [100000, 250000, 500000, 1000000] };
 function renderQuick() { $('#quick').innerHTML = QUICK[A.mode].map(v => `<button data-q="${v}" class="${Number(A.amt) === v ? 'on' : ''}">${rpS(v).replace('Rp', '')}</button>`).join(''); }
 $('#quick').onclick = e => { const b = e.target.closest('[data-q]'); if (!b) return; haptic(); A.amt = b.dataset.q; renderAmt(true); };
 $('#keys').onclick = e => { const b = e.target.closest('[data-k]'); if (!b) return; haptic(); const k = b.dataset.k;
@@ -908,8 +920,10 @@ function setMode(m, keepCat) {
   A.mode = m; if (!keepCat) { A.cat = ''; A.autoCat = true; }
   if (m === 'in' && A.cat && !isSave(A.cat)) A.cat = ''; if (m === 'out' && isSave(A.cat)) A.cat = '';
   $$('#addSeg button').forEach(b => b.classList.toggle('on', b.dataset.m === m));
-  $('#amtSg').className = 'sg ' + m; $('#amtSg').textContent = m === 'out' ? '−' : '+';
-  $('#addNote').placeholder = m === 'out' ? 'Untuk apa?' : 'Catatan setoran (opsional)';
+  $('#amtSg').className = 'sg ' + (m === 'out' ? 'out' : 'in'); $('#amtSg').textContent = m === 'out' ? '−' : m === 'inc' ? '+' : '→';
+  $('#amtSg').style.color = m === 'in' ? '#2563EB' : '';
+  $('#addNote').placeholder = m === 'out' ? 'Untuk apa?' : m === 'inc' ? 'Dari mana? (mis. fee freelance)' : 'Catatan alokasi (opsional)';
+  $('#chCat').style.display = m === 'inc' ? 'none' : '';
   renderCatChip(); renderAmt();
 }
 $('#addSeg').onclick = e => { const b = e.target.closest('button'); if (b) { haptic(); setMode(b.dataset.m); } };
@@ -917,9 +931,11 @@ function renderAmt(pop) {
   const v = Number(A.amt || 0); $('#amtN').textContent = dots(v); $('#amtBig').classList.toggle('zero', !v);
   if (pop) { const n = $('#amtN'); n.classList.remove('pop'); void n.offsetWidth; n.classList.add('pop'); setTimeout(() => n.classList.remove('pop'), 120); }
   const L = String(dots(v)).length; $('#amtBig').style.fontSize = L > 11 ? '36px' : L > 8 ? '44px' : '';
-  if (D) $('#amtHint').textContent = A.mode === 'out' ? (v ? 'Sisa aman setelah ini ' + rpS(D.aman - v) : 'Aman dipakai ' + rpS(D.harian) + '/hari') : 'Total tabungan ' + rpS(D.totalAset + v);
+  if (D) $('#amtHint').textContent = A.mode === 'out' ? (v ? 'Sisa aman setelah ini ' + rpS(D.aman - v) : 'Aman dipakai ' + rpS(D.harian) + '/hari')
+    : A.mode === 'inc' ? 'Sisa uang jadi ' + rpS(D.sisa + v)
+    : (v ? 'Sisa uang ' + rpS(D.sisa - v) + ' · tabungan ' + rpS(D.totalAset + v) : 'Pindahkan sebagian sisa uang ke tabungan');
   $('#addSave').disabled = !v;
-  $('#addSave').textContent = v ? (A.cat ? (A.mode === 'in' ? 'Setor ' : 'Simpan ') + rp(v) : 'Pilih kategori') : 'Masukkan nominal';
+  $('#addSave').textContent = !v ? 'Masukkan nominal' : A.mode === 'inc' ? 'Simpan pemasukan ' + rp(v) : !A.cat ? (A.mode === 'in' ? 'Pilih pos tabungan' : 'Pilih kategori') : (A.mode === 'in' ? 'Alokasikan ' : 'Simpan ') + rp(v);
   renderQuick();
 }
 function renderCatChip() {
@@ -960,21 +976,32 @@ $('#addNote').addEventListener('input', () => {
 $('#addNote').addEventListener('keydown', e => { if (e.key === 'Enter') e.target.blur(); });
 $('#addSave').onclick = async () => {
   const amount = Number(A.amt || 0); if (!amount) return;
+  if (A.mode === 'inc') {
+    const p = { amount, desc: $('#addNote').value.trim() || 'Pemasukan lain', date: A.date };
+    const temp = { row: -1, date: p.date, desc: p.desc, amt: amount };
+    if (D) { D.income = [temp].concat(D.income || []); render(); }
+    closeSheets(); toast('Pemasukan ' + rp(amount) + ' tersimpan', true);
+    try { setData(await api('income', p)); } catch (e) { toast('⚠️ Gagal menyimpan: ' + e.message); if (D) { D.income = D.income.filter(t => t !== temp); render(); } }
+    return;
+  }
   if (!A.cat) { openCats(); return; }
   const payload = { amount, cat: A.cat, desc: $('#addNote').value.trim() || A.cat, date: A.date };
   const btn = $('#addSave'); btn.disabled = true; btn.textContent = 'Menyimpan…';
   // optimistis
   const temp = { row: -1, date: payload.date, desc: payload.desc, cat: payload.cat, amt: amount };
   if (D) { D.recent = [temp].concat(D.recent || []); render(); }
-  closeSheets(); toast((A.mode === 'in' ? 'Setoran ' : '') + rp(amount) + ' tersimpan', true);
+  closeSheets(); toast(A.mode === 'in' ? 'Alokasi ' + rp(amount) + ' ke ' + payload.cat + ' tersimpan' : rp(amount) + ' tersimpan', true);
   try { setData(await api('add', payload)); } catch (e) { toast('⚠️ Gagal menyimpan: ' + e.message); if (D) { D.recent = D.recent.filter(t => t !== temp); render(); } }
 };
 
 /* ---------- DETAIL ---------- */
-function openTx(row) {
+function openTx(id) {
+  id = String(id);
+  if (id[0] === 'i') return openIncome(Number(id.slice(1)));
+  const row = Number(id);
   const t = (D.recent || []).concat(D.setoran || []).find(x => x.row === row); if (!t) return;
-  const s = isSave(t.cat), jenis = s ? 'Tabungan' : (D.needs.includes(t.cat) ? 'Needs' : D.wants.includes(t.cat) ? 'Wants' : '—');
-  $('#txBody').innerHTML = `<div class="dtop">${icBox(t.cat, 64)}<div class="big money" style="color:${s ? 'var(--g)' : 'inherit'}">${s ? '+' : '−'}${rp(t.amt).replace('−', '')}</div><p>${esc(t.desc)}</p><span class="ok">${svg('check')}Tercatat di spreadsheet</span></div>
+  const s = isSave(t.cat), jenis = s ? 'Alokasi tabungan' : (D.needs.includes(t.cat) ? 'Needs' : D.wants.includes(t.cat) ? 'Wants' : '—');
+  $('#txBody').innerHTML = `<div class="dtop">${icBox(t.cat, 64)}<div class="big money" style="color:${s ? '#2563EB' : 'inherit'}">${s ? '' : '−'}${rp(t.amt).replace('−', '')}</div><p>${esc(t.desc)}</p><span class="ok">${svg('check')}Tercatat di spreadsheet</span></div>
     <div class="kv"><div><span>Tanggal</span><b>${HARIL[pd(t.date).getDay()]}, ${tgl(t.date)}</b></div><div><span>Kategori</span><b>${esc(t.cat || '—')}</b></div><div><span>Jenis</span><b>${jenis}</b></div><div><span>Baris di sheet</span><b>${t.row > 0 ? 'Spending #' + t.row : 'menyimpan…'}</b></div></div>
     <div class="two"><button class="btn ghost" id="txRep">${svg('repeat')}Catat lagi</button><a class="btn ghost" style="text-decoration:none" href="${esc((D && D.sheetUrl) || '#')}" target="_blank" rel="noopener">${svg('sheet')}Buka sheet</a></div>
     <button class="danger" id="txDel">${svg('trash')}Hapus transaksi</button>`;
@@ -984,6 +1011,21 @@ function openTx(row) {
     try { setData(await api('delete', { row: t.row, desc: t.desc })); } catch (e) { toast('⚠️ ' + e.message); load(); }
   };
   $('#txRep').onclick = () => openAdd(s ? 'in' : 'out', t);
+  openSheet('tx');
+}
+
+function openIncome(row) {
+  const t = (D.income || []).find(x => x.row === row); if (!t) return;
+  $('#txBody').innerHTML = `<div class="dtop">${incBox(60)}<div class="big money" style="color:var(--g)">+${rp(t.amt)}</div><p>${esc(t.desc)}</p><span class="ok">${svg('check')}Menambah sisa uang</span></div>
+    <div class="kv"><div><span>Tanggal</span><b>${HARIL[pd(t.date).getDay()]}, ${tgl(t.date)}</b></div><div><span>Jenis</span><b>Pemasukan lain</b></div><div><span>Baris di sheet</span><b>${t.row > 0 ? 'Pemasukan Lain #' + t.row : 'menyimpan…'}</b></div></div>
+    <div class="two"><button class="btn ghost" id="txRep">${svg('repeat')}Catat lagi</button><a class="btn ghost" style="text-decoration:none" href="${esc((D && D.sheetUrl) || '#')}" target="_blank" rel="noopener">${svg('sheet')}Buka sheet</a></div>
+    <button class="danger" id="txDel">${svg('trash')}Hapus pemasukan</button>`;
+  $('#txDel').onclick = async () => {
+    if (t.row < 0 || !confirm('Hapus "' + t.desc + '"?')) return;
+    closeSheets(); D.income = D.income.filter(x => x.row !== t.row); render(); toast('Dihapus', true);
+    try { setData(await api('delIncome', { row: t.row, desc: t.desc })); } catch (e) { toast('⚠️ ' + e.message); load(); }
+  };
+  $('#txRep').onclick = () => openAdd('inc', { amt: t.amt, desc: t.desc, cat: '' });
   openSheet('tx');
 }
 
