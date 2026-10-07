@@ -759,7 +759,7 @@ function applyHide() {
 }
 function openSheetFor(k) {
   if (k === 'saldo') {
-    $('#saldoInfo').innerHTML = `Isi saldo rekening harian (tanpa tabungan) tepat <b>sebelum</b> gaji ${D ? tgl(D.mulaiCatat) : ''} masuk. Setelah itu sisa uang dihitung otomatis dan terbawa ke siklus berikutnya.`;
+    $('#saldoInfo').innerHTML = `Isi saldo rekening harian (tanpa tabungan) yang ada sekarang. Setelah itu sisa uang dihitung otomatis dari semua pemasukan dan pengeluaran yang kamu catat.`;
     $('#saldoIn').value = D && D.saldoAwal ? dots(D.saldoAwal) : '';
   }
   if (k === 'settings') {
@@ -795,7 +795,7 @@ function render() {
   $('#hTiles').innerHTML = ks.length ? '<div class="tiles">' + ks.map(k => { const p = k.plan ? k.pakai / k.plan : (k.pakai ? 1.01 : 0);
     const col = p > 1 ? 'var(--red)' : p >= .8 ? 'var(--amber)' : catColor(k.nama);
     return `<button class="tile press" data-go="insight">${icBox(k.nama)}<b>${esc(k.nama)}</b><small class="money">${rpS(k.pakai)}</small><span class="mini"><i style="width:${Math.max(6, Math.min(100, p * 100))}%;background:${col}"></i></span></button>`; }).join('') + '</div>'
-    : emptyC('chart', 'Budget mulai siklus ' + tglS(D.mulaiCatat || D.gajian), 'Pemakaian per kategori tampil di sini setelah gajian.', 'data-go="insight"');
+    : emptyC('chart', 'Belum ada pengeluaran', 'Pemakaian per kategori tampil di sini setelah kamu mencatat pengeluaran.', 'data-go="insight"');
 
   // goal
   const tp = D.target ? D.totalAset / D.target : 0;
