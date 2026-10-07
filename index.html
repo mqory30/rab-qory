@@ -212,6 +212,7 @@ svg.i{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.8;stro
 .frow .sw{display:flex;gap:6px;flex:1}.frow .sw button{flex:1;white-space:nowrap}
 .frow .sw button{border:0;border-radius:10px;padding:8px 6px;font-size:12px;font-weight:600;background:var(--chip);color:var(--ink2)}
 .frow .sw button.on{background:var(--ink);color:#fff}
+.frow .sw button.on.s{background:#2563EB}
 .frow .sw .pickwrap{position:relative;flex:1;display:flex;margin:0}
 .frow .sw .pickwrap button{flex:1;pointer-events:none}
 .frow .sw .pickwrap input{position:absolute;inset:0;width:100%;height:100%;opacity:.011;border:0;padding:0;margin:0;font-size:16px;-webkit-appearance:none;appearance:none;background:transparent;color:transparent;cursor:pointer;z-index:2}
@@ -518,6 +519,9 @@ svg.i{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.8;stro
   <div class="quick" id="quick"></div>
   <div class="form">
     <div class="frow"><span class="ic"><svg class="i" viewBox="0 0 24 24"><path d="M12 20h9M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4z"/></svg></span><div class="k">Catatan<input id="addNote" placeholder="Untuk apa?" autocomplete="off" enterkeyhint="done"></div></div>
+    <div class="frow" id="srcRow"><span class="ic"><svg class="i" viewBox="0 0 24 24"><path d="M12 22c5.5 0 10-4.5 10-10S17.5 2 12 2 2 6.5 2 12s4.5 10 10 10zM15 9.4C14.4 8.6 13.3 8 12 8c-1.7 0-3 .9-3 2s1.3 1.8 3 2 3 .9 3 2-1.3 2-3 2c-1.3 0-2.4-.6-3-1.4M12 6v2M12 16v2"/></svg></span>
+      <div class="sw" id="srcSw"><button data-s="rek">Rekening</button><button data-s="luar">Bonus/luar</button><button data-s="pos">Pos lain</button></div></div>
+    <div class="frow" id="dariRow"><span class="ic"><svg class="i" viewBox="0 0 24 24"><path d="M17 7 7 17M16 17H7V8"/></svg></span><div class="k" style="flex:1;min-width:0">Ambil dari pos<div class="chips" id="dariChips" style="margin-top:6px"></div></div></div>
     <button class="frow" id="chCat"><span class="ic" id="chCatIc"><svg class="i" viewBox="0 0 24 24"><path d="M20.6 13.4 13.4 20.6a2 2 0 0 1-2.8 0L3 13V3h10l7.6 7.6a2 2 0 0 1 0 2.8zM7.5 7.5h.01"/></svg></span><div class="k"><span id="chCatL">Kategori</span><b id="chCatT" class="ph">Pilih kategori</b></div><svg class="i chev" viewBox="0 0 24 24"><path d="m9 18 6-6-6-6"/></svg></button>
     <div class="frow" id="chDate"><span class="ic"><svg class="i" viewBox="0 0 24 24"><path d="M3 6a1 1 0 0 1 1-1h16a1 1 0 0 1 1 1v14a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1zM3 10h18M8 3v4M16 3v4"/></svg></span><b id="chDateT" hidden></b>
       <div class="sw" id="dateSw"><button data-d="0">Hari ini</button><button data-d="-1">Kemarin</button><label class="pickwrap"><button data-d="pick" tabindex="-1">Pilih tanggal</button><input type="date" id="addDate" aria-label="Pilih tanggal"></label></div></div>
@@ -817,7 +821,7 @@ function renderWeek() {
 function txRow(t) {
   if (t.kind === 'inc') return `<button class="txi" data-tx="${txKey(t)}">${incBox()}<span class="m"><b>${esc(t.desc)}</b><span>Pemasukan · ${relDay(t.date)}</span></span><span class="a money plus">+${rp(t.amt)}</span></button>`;
   const s = isSave(t.cat);
-  return `<button class="txi" data-tx="${txKey(t)}">${icBox(t.cat)}<span class="m"><b>${esc(t.desc)}</b><span>${s ? 'Alokasi → ' : ''}${esc(t.cat || 'Tanpa kategori')} · ${relDay(t.date)}</span></span><span class="a money ${s ? 'save' : ''}">${s ? '' : '−'}${rp(t.amt).replace('−', '')}</span></button>`;
+  return `<button class="txi" data-tx="${txKey(t)}">${icBox(t.cat)}<span class="m"><b>${esc(t.desc)}</b><span>${s ? 'Alokasi → ' : ''}${esc(t.cat || 'Tanpa kategori')} · ${relDay(t.date)}</span></span><span class="a money ${s ? 'save' : ''}">${s ? (t.amt < 0 ? '−' : '') : '−'}${rp(t.amt).replace('−', '')}</span></button>`;
 }
 function relDay(s) { const t = todayIso(); if (s === t) return 'Hari ini'; if (s === addDays(t, -1)) return 'Kemarin'; return tglS(s); }
 function dayHead(s) { const t = todayIso(); if (s === t) return 'Hari ini'; if (s === addDays(t, -1)) return 'Kemarin'; const d = pd(s); return HARIL[d.getDay()] + ', ' + tglS(s); }
@@ -920,7 +924,7 @@ $('#keys').onclick = e => { const b = e.target.closest('[data-k]'); if (!b) retu
   if (k === '⌫') A.amt = A.amt.slice(0, -1); else if (!(A.amt === '' && (k === '0' || k === '000')) && A.amt.length < 11) A.amt += k;
   renderAmt(true); };
 function openAdd(mode, prefill) {
-  A = { mode, amt: prefill ? String(prefill.amt) : '', cat: prefill ? prefill.cat : '', date: todayIso(), autoCat: !prefill };
+  A = { mode, amt: prefill ? String(Math.abs(prefill.amt)) : '', cat: prefill ? prefill.cat : '', date: todayIso(), autoCat: !prefill, sumber: 'rek', dari: '' };
   $('#addNote').value = prefill ? prefill.desc : '';
   setMode(mode, true); renderAmt(); renderDate(); openSheet('add');
 }
@@ -932,8 +936,21 @@ function setMode(m, keepCat) {
   $('#amtSg').style.color = m === 'in' ? '#2563EB' : '';
   $('#addNote').placeholder = m === 'out' ? 'Untuk apa?' : m === 'inc' ? 'Dari mana? (mis. fee freelance)' : 'Catatan alokasi (opsional)';
   $('#chCat').style.display = m === 'inc' ? 'none' : '';
-  renderCatChip(); renderAmt();
+  renderSrc(); renderCatChip(); renderAmt();
 }
+function renderSrc() {
+  const on = A.mode === 'in';
+  $('#srcRow').style.display = on ? '' : 'none';
+  $$('#srcSw button').forEach(b => b.classList.toggle('on', b.dataset.s === A.sumber));
+  const pos = on && A.sumber === 'pos';
+  $('#dariRow').style.display = pos ? '' : 'none';
+  if (pos && D) $('#dariChips').innerHTML = (D.tabKat || []).filter(c => c !== A.cat).map(c => {
+    const t = (D.tabungan || []).find(x => x.nama === c);
+    return `<button class="chip ${A.dari === c ? 'on' : ''}" data-dari="${esc(c)}">${esc(c)}${t ? ' · ' + rpS(t.saldo) : ''}</button>`; }).join('');
+  if (on) $('#addNote').placeholder = A.sumber === 'luar' ? 'Dari mana? (mis. bonus kantor)' : A.sumber === 'pos' ? 'Catatan (opsional)' : 'Catatan alokasi (opsional)';
+}
+$('#srcSw').onclick = e => { const b = e.target.closest('[data-s]'); if (!b) return; haptic(); A.sumber = b.dataset.s; if (A.sumber !== 'pos') A.dari = ''; renderSrc(); renderAmt(); };
+$('#dariChips').onclick = e => { const b = e.target.closest('[data-dari]'); if (!b) return; haptic(); A.dari = b.dataset.dari; renderSrc(); renderAmt(); };
 $('#addSeg').onclick = e => { const b = e.target.closest('button'); if (b) { haptic(); setMode(b.dataset.m); } };
 function renderAmt(pop) {
   const v = Number(A.amt || 0); $('#amtN').textContent = dots(v); $('#amtBig').classList.toggle('zero', !v);
@@ -941,9 +958,11 @@ function renderAmt(pop) {
   const L = String(dots(v)).length; $('#amtBig').style.fontSize = L > 11 ? '36px' : L > 8 ? '44px' : '';
   if (D) $('#amtHint').textContent = A.mode === 'out' ? (v ? 'Sisa aman setelah ini ' + rpS(D.aman - v) : 'Aman dipakai ' + rpS(D.harian) + '/hari')
     : A.mode === 'inc' ? 'Sisa uang jadi ' + rpS(D.sisa + v)
+    : A.sumber === 'luar' ? (v ? 'Sisa uang tetap · tabungan jadi ' + rpS(D.totalAset + v) : 'Uang dari luar langsung masuk tabungan')
+    : A.sumber === 'pos' ? (A.dari ? 'Pindah dari ' + A.dari + ' · total tabungan tetap' : 'Pilih pos asal di bawah')
     : (v ? 'Sisa uang ' + rpS(D.sisa - v) + ' · tabungan ' + rpS(D.totalAset + v) : 'Pindahkan sebagian sisa uang ke tabungan');
   $('#addSave').disabled = !v;
-  $('#addSave').textContent = !v ? 'Masukkan nominal' : A.mode === 'inc' ? 'Simpan pemasukan ' + rp(v) : !A.cat ? (A.mode === 'in' ? 'Pilih pos tabungan' : 'Pilih kategori') : (A.mode === 'in' ? 'Alokasikan ' : 'Simpan ') + rp(v);
+  $('#addSave').textContent = !v ? 'Masukkan nominal' : A.mode === 'in' && A.sumber === 'pos' && !A.dari ? 'Pilih pos asal' : A.mode === 'inc' ? 'Simpan pemasukan ' + rp(v) : !A.cat ? (A.mode === 'in' ? 'Pilih pos tabungan' : 'Pilih kategori') : (A.mode === 'in' ? 'Alokasikan ' : 'Simpan ') + rp(v);
   renderQuick();
 }
 function renderCatChip() {
@@ -995,6 +1014,15 @@ $('#addSave').onclick = async () => {
     return;
   }
   if (!A.cat) { openCats(); return; }
+  if (A.mode === 'in') {
+    if (A.sumber === 'pos' && !A.dari) { toast('Pilih pos asal dulu'); return; }
+    const p = { amount, cat: A.cat, desc: $('#addNote').value.trim(), date: A.date, sumber: A.sumber, dari: A.dari };
+    const btn = $('#addSave'); btn.disabled = true; btn.textContent = 'Menyimpan…';
+    closeSheets(); toast('Menyimpan alokasi…');
+    try { setData(await api('alokasi', p)); toast(A.sumber === 'pos' ? 'Dipindah ' + rp(amount) + ' ke ' + p.cat : 'Alokasi ' + rp(amount) + ' ke ' + p.cat + ' tersimpan', true); }
+    catch (e) { toast('⚠️ Gagal menyimpan: ' + e.message); }
+    return;
+  }
   const payload = { amount, cat: A.cat, desc: $('#addNote').value.trim() || A.cat, date: A.date };
   const btn = $('#addSave'); btn.disabled = true; btn.textContent = 'Menyimpan…';
   // optimistis
@@ -1011,19 +1039,37 @@ function openTx(id) {
   const row = Number(id);
   const t = (D.recent || []).concat(D.setoran || []).find(x => x.row === row); if (!t) return;
   const s = isSave(t.cat), jenis = s ? 'Alokasi tabungan' : (D.needs.includes(t.cat) ? 'Needs' : D.wants.includes(t.cat) ? 'Wants' : '—');
-  $('#txBody').innerHTML = `<div class="dtop">${icBox(t.cat, 64)}<div class="big money" style="color:${s ? '#2563EB' : 'inherit'}">${s ? '' : '−'}${rp(t.amt).replace('−', '')}</div><p>${esc(t.desc)}</p><span class="ok">${svg('check')}Tercatat di spreadsheet</span></div>
+  $('#txBody').innerHTML = `<div class="dtop">${icBox(t.cat, 64)}<div class="big money" style="color:${s ? '#2563EB' : 'inherit'}">${s ? (t.amt < 0 ? '−' : '') : '−'}${rp(t.amt).replace('−', '')}</div><p>${esc(t.desc)}</p><span class="ok">${svg('check')}Tercatat di spreadsheet</span></div>
     <div class="kv"><div><span>Tanggal</span><b>${HARIL[pd(t.date).getDay()]}, ${tgl(t.date)}</b></div><div><span>Kategori</span><b>${esc(t.cat || '—')}</b></div><div><span>Jenis</span><b>${jenis}</b></div><div><span>Baris di sheet</span><b>${t.row > 0 ? 'Spending #' + t.row : 'menyimpan…'}</b></div></div>
     <div class="two"><button class="btn ghost" id="txRep">${svg('repeat')}Catat lagi</button><a class="btn ghost" style="text-decoration:none" href="${esc((D && D.sheetUrl) || '#')}" target="_blank" rel="noopener">${svg('sheet')}Buka sheet</a></div>
     <button class="danger" id="txDel">${svg('trash')}Hapus transaksi</button>`;
   $('#txDel').onclick = async () => {
-    if (t.row < 0 || !confirm('Hapus "' + t.desc + '"?')) return;
-    closeSheets(); D.recent = D.recent.filter(x => x.row !== t.row); render(); toast('Dihapus', true);
-    try { setData(await api('delete', { row: t.row, desc: t.desc })); } catch (e) { toast('⚠️ ' + e.message); load(); }
+    if (t.row < 0) return;
+    const pp = pasanganSpend(t), pi = pasanganIncome(t);
+    if (!confirm('Hapus "' + t.desc + '"?' + (pp || pi ? '\nPasangannya ikut terhapus.' : ''))) return;
+    closeSheets(); D.recent = D.recent.filter(x => x.row !== t.row && (!pp || x.row !== pp.row));
+    if (pi) D.income = (D.income || []).filter(x => x.row !== pi.row);
+    render(); toast('Dihapus', true);
+    try {
+      let d = await api('delete', { row: t.row, desc: t.desc });
+      if (pp) d = await api('delete', { row: pp.row, desc: pp.desc });
+      if (pi) d = await api('delIncome', { row: pi.row, desc: pi.desc });
+      setData(d);
+    } catch (e) { toast('⚠️ ' + e.message); load(); }
   };
   $('#txRep').onclick = () => openAdd(s ? 'in' : 'out', t);
   openSheet('tx');
 }
 
+function pasanganSpend(t) {
+  if (!/^Pindah .+ → .+$/.test(t.desc)) return null;
+  return (D.recent || []).find(x => x.row !== t.row && x.row > 0 && x.date === t.date && x.desc === t.desc && x.amt === -t.amt) || null;
+}
+function pasanganIncome(t) {
+  if (!/ · dari luar$/.test(t.desc)) return null;
+  const want = t.desc.replace(/ · dari luar$/, '') + ' → ' + t.cat;
+  return (D.income || []).find(x => x.row > 0 && x.date === t.date && x.amt === t.amt && x.desc === want) || null;
+}
 function openIncome(row) {
   const t = (D.income || []).find(x => x.row === row); if (!t) return;
   $('#txBody').innerHTML = `<div class="dtop">${incBox(60)}<div class="big money" style="color:var(--g)">+${rp(t.amt)}</div><p>${esc(t.desc)}</p><span class="ok">${svg('check')}Menambah sisa uang</span></div>
@@ -1032,8 +1078,9 @@ function openIncome(row) {
     <button class="danger" id="txDel">${svg('trash')}Hapus pemasukan</button>`;
   $('#txDel').onclick = async () => {
     if (t.row < 0 || !confirm('Hapus "' + t.desc + '"?')) return;
-    closeSheets(); D.income = D.income.filter(x => x.row !== t.row); render(); toast('Dihapus', true);
-    try { setData(await api('delIncome', { row: t.row, desc: t.desc })); } catch (e) { toast('⚠️ ' + e.message); load(); }
+    const pa = (D.recent || []).find(x => x.date === t.date && x.amt === t.amt && / · dari luar$/.test(x.desc) && t.desc === x.desc.replace(/ · dari luar$/, '') + ' → ' + x.cat);
+    closeSheets(); D.income = D.income.filter(x => x.row !== t.row); if (pa) D.recent = D.recent.filter(x => x.row !== pa.row); render(); toast('Dihapus', true);
+    try { let d = await api('delIncome', { row: t.row, desc: t.desc }); if (pa) d = await api('delete', { row: pa.row, desc: pa.desc }); setData(d); } catch (e) { toast('⚠️ ' + e.message); load(); }
   };
   $('#txRep').onclick = () => openAdd('inc', { amt: t.amt, desc: t.desc, cat: '' });
   openSheet('tx');
